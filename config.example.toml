@@ -1,0 +1,57 @@
+# Komplette Beispiel-Konfiguration für pv-vs-etf.
+#
+# Alle Werte sind Defaults — kopiere diese Datei nach config.toml und passe an.
+# Alle Angaben ohne Gewähr.
+
+[pv]
+mode = "rooftop"            # "rooftop" oder "balcony"
+kwp = 10.0                  # Peakleistung in kWp
+cost_per_kwp = 1300.0       # EUR/kWp installiert ( netto bei §16-Option )
+# --- Batteriespeicher ---
+storage_kwh = 10.0          # 0 = ohne Speicher
+storage_cost_per_kwh = 500.0
+storage_capacity_loss = 0.02       # Kapazitätsverlust pro Jahr
+storage_efficiency = 0.90          # Round-Trip-Wirkungsgrad
+# --- Förderung ---
+subsidy = 0.0               # z.B. KfW-Zuschuss, wird vom Investitionsbetrag abgezogen
+# --- Erträge ---
+yield_per_kwp = 950.0       # kWh pro kWp und Jahr (Dach, Südausrichtung)
+degradation = 0.005         # Leistungsrückgang Module p.a.
+self_consumption_share = 0.30  # Anteil Eigenverbrauch an Produktion (ohne Speicher-Effekt)
+# --- Preise ---
+electricity_price = 0.35    # EUR/kWh Arbeitspreis Haushaltsstrom
+electricity_price_growth = 0.025  # realer Anstieg p.a.
+feed_in_tariff = 0.078      # EUR/kWh Teileinspeisung <=10 kWp (Inbetriebnahme 2025)
+feed_in_tariff_growth = 0.0 # Vergütung ist 20 Jahre fix
+# --- Laufende Kosten ---
+insurance_per_year = 120.0
+meter_rent_per_year = 40.0
+maintenance_per_year_per_kwp = 8.0
+inverter_replacement_cost = 2500.0    # WR-Tausch
+inverter_replacement_year = 12
+inverter_replacement_escalation = 0.02
+# --- Horizont ---
+lifetime_years = 25
+residual_value = 0.0        # Restwert am Ende (z.B. junger WR nach Tausch)
+
+[tax]
+preset = "s16_2025"         # "s16_2025": §16 EStG ab 2025 (steuerfrei, umsatzsteuerfrei)
+                            # "legacy_2023": alte Regelung (Einspeisung steuerfrei,
+                            #   70% des Eigenverbrauchswerts versteuert)
+income_tax_rate = 0.30      # grenzsteuersatz für legacy_2023
+capital_gains_tax_rate = 0.26375  # Abgeltungsteuer + Soli
+teilfreistellung = 0.30     # Aktienfonds
+sparerpauschbetrag = 1000.0 # 1000 EUR Einzel / 2000 EUR Zusammenveranlagung
+basiszins = 0.0255          # Vorabpauschale-Basiszins (2025)
+vorabpauschale_taxed_share = 0.70
+
+[etf]
+expected_return = 0.07      # nominale Brutto-Rendite p.a.
+dividend_yield = 0.02       # davon Ausschüttungen (Basis Vorabpauschale)
+ter = 0.0                   # TER; >0 wird von der Rendite abgezogen
+years = 25                  # Anlagehorizont (per CLI --years mit PV gekoppelt)
+
+[output]
+# output_dir und report_title sind Top-Level-Keys:
+# output_dir = "output"
+# report_title = "PV-Anlage vs. ETF"
